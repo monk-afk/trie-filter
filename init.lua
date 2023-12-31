@@ -1,5 +1,5 @@
   --[[      FilterPlus      ]]--
-  --[[   init.lua - 0.009   ]]--
+  --[[   init.lua - 0.010   ]]--
   --[[  monk (c) 2023 MITL  ]]--
 local concat = table.concat
 local insert = table.insert
@@ -127,12 +127,14 @@ local function process_message(word_table, sender)
 		end
 		
 			local name = gsub(word_table[o], "[^a-zA-Z0-9_-]*$", "")
-			local mentioned = players_online[name]
-			if mentioned then
-				if not mentions then
-					mentions = {}
+			for players,_ in pairs(players_online) do
+				if lower(name) == lower(players) then
+					if not mentions then
+						mentions = {}
+					end
+					mentions[players] = true
+					print(mentions[players])
 				end
-				mentions[name] = true
 			end
 	end
 	return send_message(lambda, sender, mentions)
@@ -180,10 +182,10 @@ local on_chat_message = function(name, message)
 end
 
 
-local name = "monk"
+local name = "moNkk"
 players_online[name] = time()-1
 
-local message = "this is a fucking test"
+local message = "MONK this is a fucking test"
 
 on_chat_message(name, message)
 
